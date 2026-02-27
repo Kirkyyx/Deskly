@@ -43,7 +43,7 @@ jobs:
       - name: Generate app key
         run: php artisan key:generate
 
-        - name: Debug AppServiceProvider
+      - name: Debug AppServiceProvider
         run: cat app/Providers/AppServiceProvider.php
 
       - name: Prepare SQLite database
