@@ -27,21 +27,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
 
-        $user = Auth::user();
-
-        // Redirect based on role using route names
-        switch ($user->role) {
-            case 'admin':
-                return redirect()->route('admin.dashboard');
-            case 'staff':
-                return redirect()->route('staff.dashboard');
-            case 'user':
-                return redirect()->route('user.dashboard');
-            default:
-                // Invalid role — log out safely
-                Auth::logout();
-                return redirect('/')->withErrors('Invalid user role.');
-        }
+        return redirect()->intended(route('dashboard'));
     }
 
     /**
