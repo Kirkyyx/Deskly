@@ -12,13 +12,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Trust all proxies (fixes HTTPS on Railway)
+        $middleware->trustProxies(at: '*');
+
         // Register your middleware alias here
         $middleware->alias([
             'role' => CheckRole::class,
         ]);
-
-        // You can also add global middleware if needed:
-        // $middleware->use([...]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
