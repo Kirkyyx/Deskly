@@ -10,14 +10,19 @@ class AuditLogController extends Controller
     public function index(Request $request)
     {
         $query = AuditLog::with(['user', 'ticket', 'article']);
-
-        $role = strtolower(auth()->user()->role);
+        $role  = strtolower(auth()->user()->role);
 
         if ($role === 'staff') {
-            $query->whereHas('ticket', fn($q) => $q->where('technician_id', auth()->id()));
+            // Staff see: logs they personally created + logs related to their assigned tickets
+            $staffId = auth()->id();
+            $query->where(function ($q) use ($staffId) {
+                $q->where('user_id', $staffId)
+                  ->orWhereHas('ticket', fn($tq) => $tq->where('technician_id', $staffId));
+            });
         } elseif ($role === 'user') {
             abort(403, 'You are not authorized to view audit logs.');
         }
+        // admin: no filter — sees everything
 
         // Filters
         if ($request->filled('role')) {

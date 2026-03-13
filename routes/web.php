@@ -11,6 +11,7 @@ use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StaffTicketController;
 use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\StaffDashboardController;
 use App\Http\Controllers\UserTicketController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +30,7 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:user')
         ->name('user.dashboard');
 
-    Route::get('/staff/dashboard', fn() => view('staff.dashboard'))
+    Route::get('/staff/dashboard', [StaffDashboardController::class, 'index'])
         ->middleware('role:staff')
         ->name('staff.dashboard');
 
@@ -56,7 +57,6 @@ Route::middleware('auth')->group(function () {
     // =======================
     // Admin-only routes
     // =======================
-    // ✅ Fixed
     Route::middleware('role:admin')->group(function () {
         Route::resource('users',      UserController::class);
         Route::resource('categories', CategoryController::class);
@@ -70,6 +70,11 @@ Route::middleware('auth')->group(function () {
             Route::patch('articles/{article}/toggle-status', [ArticleController::class, 'toggleStatus'])
                 ->name('articles.toggle-status');
         });
+
+    // Ticket reassignment (admin only)
+    Route::middleware('role:admin')
+        ->patch('tickets/{ticket}/reassign', [TicketController::class, 'reassign'])
+        ->name('tickets.reassign');
 
     // =======================
     // Admin + Staff routes
@@ -96,8 +101,8 @@ Route::middleware('auth')->group(function () {
         ->group(function () {
             Route::get('/tickets',                          [StaffTicketController::class, 'index'])->name('tickets.index');
             Route::get('/tickets/{ticket}',                 [StaffTicketController::class, 'show'])->name('tickets.show');
-            Route::post('/tickets/{ticket}/reply',           [StaffTicketController::class, 'reply'])->name('tickets.reply');
-            Route::patch('/tickets/{ticket}/update-status',  [StaffTicketController::class, 'updateStatus'])->name('tickets.update-status');
+            Route::post('/tickets/{ticket}/reply',          [StaffTicketController::class, 'reply'])->name('tickets.reply');
+            Route::patch('/tickets/{ticket}/update-status', [StaffTicketController::class, 'updateStatus'])->name('tickets.update-status');
         });
 
     // =======================

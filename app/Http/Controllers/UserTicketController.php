@@ -12,9 +12,25 @@ use Illuminate\Http\Request;
 
 class UserTicketController extends Controller
 {
+    /**
+     * Find the staff member with the fewest currently open/in-progress tickets.
+     * Returns null if no staff accounts exist.
+     */
+    private function assignStaff(): ?User
+    {
+        return User::where('role', 'staff')
+            ->withCount([
+                'assignedTickets as active_ticket_count' => function ($q) {
+                    $q->whereIn('status', ['open', 'in_progress']);
+                }
+            ])
+            ->orderBy('active_ticket_count', 'asc')
+            ->first();
+    }
+
     public function index(Request $request)
     {
-        $query = Ticket::with(['category', 'technician'])
+        $query = Ticket::with(['category', 'itStaff'])
             ->where('user_id', auth()->id());
 
         if ($request->filled('search')) {
@@ -54,7 +70,7 @@ class UserTicketController extends Controller
             'attachment'  => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
         ]);
 
-        $staff = User::where('role', 'staff')->inRandomOrder()->first();
+        $staff = $this->assignStaff();
 
         $ticket = Ticket::create([
             'title'         => $validated['title'],
@@ -86,10 +102,20 @@ class UserTicketController extends Controller
                 'ticket_id' => $ticket->id,
                 'user_id'   => $staff->id,
             ]);
+
+            $successMessage = 'Your ticket has been submitted and assigned to an IT staff member.';
+        } else {
+            AuditLog::log('ticket_unassigned', [
+                'status'    => 'warning',
+                'ticket_id' => $ticket->id,
+                'reason'    => 'No staff available at time of submission',
+            ]);
+
+            $successMessage = 'Your ticket has been submitted. No IT staff are currently available — it will be assigned soon.';
         }
 
         return redirect()->route('user.tickets.show', $ticket)
-                         ->with('success', 'Your ticket has been submitted and a staff member has been assigned.');
+                         ->with('success', $successMessage);
     }
 
     public function show(Ticket $ticket)

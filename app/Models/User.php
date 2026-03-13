@@ -12,38 +12,73 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
-        'role', // 👈 Add role so it can be mass-assigned
+        'role',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /** 
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
+    }
+
+    /**
+     * Tickets submitted by this user.
+     */
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    /**
+     * Tickets assigned to this user as IT staff.
+     * Required for load-balanced assignment (withCount).
+     */
+    public function assignedTickets()
+    {
+        return $this->hasMany(Ticket::class, 'technician_id');
+    }
+
+    /**
+     * Audit logs belonging to this user.
+     */
+    public function auditLogs()
+    {
+        return $this->hasMany(AuditLog::class);
+    }
+
+    /**
+     * Comments made by this user.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    // ── Role helpers ──────────────────────────────────────────
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isStaff(): bool
+    {
+        return $this->role === 'staff';
+    }
+
+    public function isUser(): bool
+    {
+        return $this->role === 'user';
     }
 }

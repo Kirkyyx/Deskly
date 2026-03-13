@@ -11,10 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Seed categories first, then users
-        $this->call([
-            CategorySeeder::class,
-            UserSeeder::class,
-        ]);
+        if (app()->isLocal()) {
+            $this->call([
+                CategorySeeder::class,
+                UserSeeder::class,
+            ]);
+        }
     }
 }

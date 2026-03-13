@@ -42,27 +42,17 @@
         animation: fadeUp 0.4s ease both;
     }
 
-    /* Page title above the card */
-    .page-title {
-        margin-bottom: 1.75rem;
-    }
-
+    .page-title { margin-bottom: 1.75rem; }
     .page-title h2 {
-        font-size: 1.5rem;
-        font-weight: 800;
-        letter-spacing: -0.035em;
-        color: var(--text-primary);
+        font-size: 1.5rem; font-weight: 800;
+        letter-spacing: -0.035em; color: var(--text-primary);
         margin: 0 0 0.2rem;
     }
-
     .page-title p {
-        font-size: 0.8125rem;
-        color: var(--text-muted);
-        margin: 0;
-        font-weight: 400;
+        font-size: 0.8125rem; color: var(--text-muted);
+        margin: 0; font-weight: 400;
     }
 
-    /* Card */
     .form-card {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -71,87 +61,75 @@
         box-shadow: 0 1px 4px rgba(0,0,0,0.05), 0 4px 24px rgba(59,110,248,0.06);
     }
 
-    /* Thin accent line at top */
     .card-accent {
         height: 3px;
         background: linear-gradient(90deg, var(--accent-blue), #6366f1);
     }
 
-    .form-body {
-        padding: 2rem 2rem 1.75rem;
-    }
+    .form-body { padding: 2rem 2rem 1.75rem; }
 
-    /* Section label inside card */
     .card-section-label {
-        font-size: 0.6875rem;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--text-muted);
-        margin-bottom: 1.5rem;
-        padding-bottom: 0.75rem;
-        border-bottom: 1px solid var(--border);
+        font-size: 0.6875rem; font-weight: 600;
+        letter-spacing: 0.1em; text-transform: uppercase;
+        color: var(--text-muted); margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem; border-bottom: 1px solid var(--border);
     }
 
-    /* Error */
     .error-box {
-        background: #fef2f2;
-        border: 1px solid #fecaca;
-        border-radius: 10px;
-        padding: 0.875rem 1.1rem;
-        margin-bottom: 1.5rem;
+        background: #fef2f2; border: 1px solid #fecaca;
+        border-radius: 10px; padding: 0.875rem 1.1rem; margin-bottom: 1.5rem;
     }
     .error-box li {
-        color: #b91c1c;
-        font-size: 0.8rem;
-        font-weight: 500;
-        list-style: none;
-        margin-bottom: 3px;
+        color: #b91c1c; font-size: 0.8rem; font-weight: 500;
+        list-style: none; margin-bottom: 3px;
     }
     .error-box li::before { content: '— '; }
 
-    /* Fields */
     .field-group { margin-bottom: 1.2rem; }
 
     .field-label {
-        display: block;
-        font-size: 0.6875rem;
-        font-weight: 600;
-        letter-spacing: 0.07em;
-        text-transform: uppercase;
-        color: var(--text-muted);
-        margin-bottom: 0.4rem;
+        display: block; font-size: 0.6875rem; font-weight: 600;
+        letter-spacing: 0.07em; text-transform: uppercase;
+        color: var(--text-muted); margin-bottom: 0.4rem;
     }
 
     .field-input {
-        width: 100%;
-        background: var(--surface-2);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 0.65rem 0.9rem;
-        color: var(--text-primary);
-        font-family: 'Inter', sans-serif;
-        font-size: 0.875rem;
+        width: 100%; background: var(--surface-2);
+        border: 1px solid var(--border); border-radius: 8px;
+        padding: 0.65rem 0.9rem; color: var(--text-primary);
+        font-family: 'Inter', sans-serif; font-size: 0.875rem;
         transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
-        outline: none;
-        box-sizing: border-box;
+        outline: none; box-sizing: border-box;
     }
-
     .field-input:focus {
         border-color: var(--accent-blue);
         box-shadow: 0 0 0 3px rgba(59,110,248,0.1);
         background: #fff;
     }
-
     .field-input::placeholder { color: #b0b8c8; }
     .field-input option { background: var(--surface); }
 
-    /* Actions */
+    /* Staff badge hint */
+    .staff-badge-hint {
+        display: none;
+        margin-top: 0.4rem;
+        padding: 0.5rem 0.75rem;
+        background: rgba(99,102,241,0.06);
+        border: 1px solid rgba(99,102,241,0.15);
+        border-radius: 7px;
+        font-size: 0.75rem;
+        color: #4f46e5;
+        font-weight: 500;
+        line-height: 1.4;
+    }
+    .staff-badge-hint .badge-preview {
+        font-weight: 700;
+        font-family: 'Inter', monospace;
+    }
+
     .form-actions {
-        display: flex;
-        gap: 0.65rem;
-        margin-top: 1.75rem;
-        padding-top: 1.5rem;
+        display: flex; gap: 0.65rem;
+        margin-top: 1.75rem; padding-top: 1.5rem;
         border-top: 1px solid var(--border);
     }
 
@@ -213,24 +191,31 @@
 
                     <div class="field-group">
                         <label class="field-label">Name</label>
-                        <input type="text" name="name" class="field-input" value="{{ old('name') }}" required placeholder="Full name">
+                        <input type="text" name="name" id="nameInput" class="field-input"
+                               value="{{ old('name') }}" required placeholder="Full name">
+                        <div class="staff-badge-hint" id="staffBadgeHint">
+                            A unique badge will be appended automatically —
+                            e.g. <span class="badge-preview" id="badgePreview">Juan dela Cruz (IT Staff #XXXX)</span>
+                        </div>
                     </div>
 
                     <div class="field-group">
                         <label class="field-label">Email</label>
-                        <input type="email" name="email" class="field-input" value="{{ old('email') }}" required placeholder="email@example.com">
+                        <input type="email" name="email" class="field-input"
+                               value="{{ old('email') }}" required placeholder="email@example.com">
                     </div>
 
                     <div class="field-group">
                         <label class="field-label">Password</label>
-                        <input type="password" name="password" class="field-input" required placeholder="••••••••">
+                        <input type="password" name="password" class="field-input"
+                               required placeholder="••••••••">
                     </div>
 
                     <div class="field-group">
                         <label class="field-label">Role</label>
-                        <select name="role" class="field-input" required>
-                            <option value="user">User</option>
-                            <option value="staff">Staff</option>
+                        <select name="role" id="roleSelect" class="field-input" required>
+                            <option value="user"  {{ old('role') === 'user'  ? 'selected' : '' }}>User</option>
+                            <option value="staff" {{ old('role') === 'staff' ? 'selected' : '' }}>Staff</option>
                         </select>
                     </div>
 
@@ -245,5 +230,28 @@
 
     </div>
 </div>
+
+<script>
+    const roleSelect   = document.getElementById('roleSelect');
+    const nameInput    = document.getElementById('nameInput');
+    const badgeHint    = document.getElementById('staffBadgeHint');
+    const badgePreview = document.getElementById('badgePreview');
+
+    function updateHint() {
+        if (roleSelect.value === 'staff') {
+            badgeHint.style.display = 'block';
+            const base = nameInput.value.trim() || 'Full Name';
+            badgePreview.textContent = base + ' (IT Staff #XXXX)';
+        } else {
+            badgeHint.style.display = 'none';
+        }
+    }
+
+    roleSelect.addEventListener('change', updateHint);
+    nameInput.addEventListener('input', updateHint);
+
+    // Run on load in case of old() repopulation
+    updateHint();
+</script>
 
 @endsection

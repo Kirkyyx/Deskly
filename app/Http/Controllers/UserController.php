@@ -8,6 +8,20 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    /**
+     * Generate a unique staff display name.
+     * e.g. "Juan dela Cruz (IT Staff #3213)"
+     */
+    private function generateStaffName(string $baseName): string
+    {
+        do {
+            $number = rand(1000, 9999);
+            $name   = "{$baseName} (IT Staff #{$number})";
+        } while (User::where('name', $name)->exists());
+
+        return $name;
+    }
+
     public function index()
     {
         if (auth()->user()->role !== 'admin') {
@@ -41,8 +55,13 @@ class UserController extends Controller
             'role'     => 'required|string|in:admin,staff,user',
         ]);
 
+        // Auto-append IT Staff badge number if role is staff
+        $name = $validated['role'] === 'staff'
+            ? $this->generateStaffName($validated['name'])
+            : $validated['name'];
+
         $user = User::create([
-            'name'     => $validated['name'],
+            'name'     => $name,
             'email'    => $validated['email'],
             'password' => bcrypt($validated['password']),
             'role'     => $validated['role'],
@@ -52,7 +71,8 @@ class UserController extends Controller
             'status' => 'success',
         ]);
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        return redirect()->route('users.index')
+                         ->with('success', "User \"{$user->name}\" created successfully.");
     }
 
     public function show(User $user)
@@ -77,9 +97,29 @@ class UserController extends Controller
     {
         if (auth()->user()->role === 'admin') {
             $validated = $request->validate([
-                'role' => 'required|string|in:admin,staff,user',
+                'name'  => 'required|string|max:255',
+                'role'  => 'required|string|in:admin,staff,user',
             ]);
-            $user->update($validated);
+
+            $newRole = $validated['role'];
+            $newName = $validated['name'];
+
+            // Changing TO staff — strip any old badge and generate a fresh one
+            if ($newRole === 'staff') {
+                // Strip existing badge suffix if present (e.g. when re-saving)
+                $baseName = preg_replace('/\s*\(IT Staff #\d{4}\)$/', '', $newName);
+                $newName  = $this->generateStaffName($baseName);
+            }
+
+            // Changing FROM staff — keep just the base name (strip badge)
+            if ($newRole !== 'staff' && str_contains($user->name, '(IT Staff #')) {
+                $newName = preg_replace('/\s*\(IT Staff #\d{4}\)$/', '', $user->name);
+            }
+
+            $user->update([
+                'name' => $newName,
+                'role' => $newRole,
+            ]);
         } else {
             $validated = $request->validate([
                 'name'  => 'required|string|max:255',
@@ -92,7 +132,8 @@ class UserController extends Controller
             'status' => 'success',
         ]);
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        return redirect()->route('users.index')
+                         ->with('success', 'User updated successfully.');
     }
 
     public function destroy(User $user)
@@ -107,6 +148,7 @@ class UserController extends Controller
 
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('users.index')
+                         ->with('success', 'User deleted successfully.');
     }
 }
