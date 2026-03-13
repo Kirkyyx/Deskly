@@ -13,7 +13,6 @@
 
     body { background: #f8f9ff; }
 
-    /* ── Animated Background ── */
     .bg-scene {
         position: fixed;
         inset: 0;
@@ -55,7 +54,6 @@
         100% { opacity:0;transform:translateY(-20px) scale(1.2); }
     }
 
-    /* ── Page Layout ── */
     .page-wrap {
         position:relative;z-index:10;
         min-height:100vh;
@@ -63,7 +61,6 @@
         padding:2rem 1.5rem;
     }
 
-    /* ── Card ── */
     .card {
         background:rgba(255,255,255,0.88);
         backdrop-filter:blur(24px) saturate(180%);
@@ -91,7 +88,6 @@
         100% { background-position:200% 0; }
     }
 
-    /* ── Brand row ── */
     .brand-row {
         display:flex;align-items:center;gap:0.875rem;
         margin-bottom:1.75rem;
@@ -109,7 +105,6 @@
     }
     .brand-sub { font-size:0.72rem;font-weight:400;color:#94a3b8;margin-top:2px;letter-spacing:0.01em; }
 
-    /* ── Headings ── */
     .card-title {
         font-size:1.625rem;font-weight:800;color:#0f172a;
         letter-spacing:-0.04em;line-height:1.2;
@@ -127,7 +122,6 @@
         to   { opacity:1;transform:translateY(0); }
     }
 
-    /* ── Session status ── */
     .session-status {
         font-size:0.8125rem;font-weight:500;color:#059669;
         background:#ecfdf5;border:1px solid #a7f3d0;
@@ -136,7 +130,22 @@
         animation:fadeUp 0.4s ease both;
     }
 
-    /* ── Form ── */
+    .alert-error {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 10px;
+        padding: 0.8rem 1.1rem;
+        margin-bottom: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #dc2626;
+        animation: fadeUp 0.4s ease both;
+    }
+    .alert-error svg { width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0; }
+
     .form-group {
         margin-bottom:1.125rem;
         animation:fadeUp 0.5s ease both;
@@ -182,7 +191,6 @@
         background:#fafbff;
     }
 
-    /* ── Suppress ALL browser-native password controls ── */
     input[type="password"]::-ms-reveal,
     input[type="password"]::-ms-clear,
     input[type="password"]::-webkit-contacts-auto-fill-button,
@@ -190,7 +198,6 @@
     input::-webkit-password-reveal-icon { display:none !important; }
     input[type="password"] { -webkit-text-security:disc; }
 
-    /* Eye toggle */
     .has-eye .form-input { padding-right:2.75rem; }
     .eye-toggle {
         position:absolute;right:0.875rem;top:50%;transform:translateY(-50%);
@@ -203,7 +210,6 @@
     .eye-toggle:hover { color:#6366f1; }
     .eye-toggle svg { width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round; }
 
-    /* Error messages */
     .input-error {
         font-size:0.78125rem;color:#ef4444;font-weight:500;
         margin-top:0.375rem;
@@ -211,7 +217,6 @@
     }
     .input-error::before { content:'!';display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#ef4444;color:#fff;font-size:0.625rem;font-weight:700;flex-shrink:0; }
 
-    /* ── Remember & Forgot row ── */
     .form-row {
         display:flex;align-items:center;justify-content:space-between;
         margin-top:0.875rem;margin-bottom:1.5rem;
@@ -245,7 +250,6 @@
     .forgot-link:hover { color:#4f46e5; }
     .forgot-link:hover::after { transform:scaleX(1); }
 
-    /* ── Submit button ── */
     .btn-submit {
         width:100%;
         padding:0.8125rem 1.5rem;
@@ -273,7 +277,6 @@
     .btn-submit:active { transform:translateY(0) scale(0.99); }
     .btn-submit svg { width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round; }
 
-    /* ── Divider ── */
     .divider {
         height:1px;
         background:linear-gradient(90deg,transparent,#e2e8f0 30%,#e2e8f0 70%,transparent);
@@ -281,7 +284,6 @@
         animation:fadeUp 0.5s 0.62s ease both;
     }
 
-    /* ── Footer ── */
     .card-footer {
         text-align:center;font-size:0.8125rem;color:#94a3b8;
         animation:fadeUp 0.5s 0.68s ease both;
@@ -321,6 +323,14 @@
             <div class="session-status">{{ session('status') }}</div>
         @endif
 
+        <!-- Error Alert -->
+        @if ($errors->any())
+            <div class="alert-error">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                {{ $errors->first() }}
+            </div>
+        @endif
+
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
@@ -346,7 +356,6 @@
                 @if ($errors->has('login'))
                     <div class="input-error">{{ $errors->first('login') }}</div>
                 @endif
-            </div>if
             </div>
 
             <!-- Password -->
@@ -430,9 +439,9 @@
     }
 
     // Password visibility toggle
-    const eyeToggle    = document.getElementById('eyeToggle');
+    const eyeToggle     = document.getElementById('eyeToggle');
     const passwordInput = document.getElementById('password');
-    const eyeIcon      = document.getElementById('eyeIcon');
+    const eyeIcon       = document.getElementById('eyeIcon');
 
     const eyeOpen   = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
     const eyeClosed = `<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`;

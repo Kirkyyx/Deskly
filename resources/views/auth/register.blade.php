@@ -418,4 +418,128 @@
     confirmInput.addEventListener('input', checkMatch);
     pwInput.addEventListener('input', checkMatch);
 </script>
-</x-guest-layout>
+</x-guest-layout><form method="POST" action="{{ route('register') }}">
+    @csrf
+
+    {{-- Error alert box --}}
+    @if ($errors->any())
+        <div style="
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+            padding: 0.8rem 1.1rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #dc2626;
+        ">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            {{ $errors->first() }}
+        </div>
+    @endif
+
+    <div class="form-grid">
+
+        <!-- Full Name -->
+        <div class="form-group">
+            <label class="form-label" for="name">Full name</label>
+            <div class="input-wrap">
+                <span class="input-icon">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <input id="name" class="form-input" type="text" name="name" value="{{ old('name') }}" placeholder="Jane Smith" required autofocus autocomplete="name"/>
+            </div>
+            @if ($errors->has('name'))
+                <div class="input-error">{{ $errors->first('name') }}</div>
+            @endif
+        </div>
+
+        <!-- Username -->
+        <div class="form-group">
+            <label class="form-label" for="username">Username</label>
+            <div class="input-wrap">
+                <span class="input-icon">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <input id="username" class="form-input" type="text" name="username" value="{{ old('username') }}" placeholder="janesmit" required autocomplete="username"/>
+            </div>
+            @if ($errors->has('username'))
+                <div class="input-error">{{ $errors->first('username') }}</div>
+            @endif
+        </div>
+
+        <!-- Email -->
+        <div class="form-group col-span-2">
+            <label class="form-label" for="email">Email address</label>
+            <div class="input-wrap">
+                <span class="input-icon">
+                    <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </span>
+                <input id="email" class="form-input" type="email" name="email" value="{{ old('email') }}" placeholder="you@company.com" required autocomplete="email"/>
+            </div>
+            @if ($errors->has('email'))
+                <div class="input-error">{{ $errors->first('email') }}</div>
+            @endif
+        </div>
+
+        <!-- Password -->
+        <div class="form-group col-span-2">
+            <label class="form-label" for="password">Password</label>
+            <div class="input-wrap has-eye">
+                <span class="input-icon">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                </span>
+                <input id="password" class="form-input" type="password" name="password" placeholder="Min. 8 characters" required autocomplete="new-password"/>
+                <button type="button" class="eye-toggle" id="eyeToggle1">
+                    <svg id="eyeIcon1" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+            </div>
+            <div class="strength-bar-wrap" id="strengthWrap">
+                <div class="strength-track"><div class="strength-fill" id="strengthFill"></div></div>
+                <div class="strength-label" id="strengthLabel"></div>
+            </div>
+            @if ($errors->has('password'))
+                <div class="input-error">{{ $errors->first('password') }}</div>
+            @endif
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group col-span-2">
+            <label class="form-label" for="password_confirmation">Confirm password</label>
+            <div class="input-wrap has-eye">
+                <span class="input-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </span>
+                <input id="password_confirmation" class="form-input" type="password" name="password_confirmation" placeholder="Re-enter your password" required autocomplete="new-password"/>
+                <button type="button" class="eye-toggle" id="eyeToggle2">
+                    <svg id="eyeIcon2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+            </div>
+            <div class="match-indicator" id="matchIndicator">
+                <svg viewBox="0 0 12 12" id="matchIcon"></svg>
+                <span id="matchText"></span>
+            </div>
+            @if ($errors->has('password_confirmation'))
+                <div class="input-error">{{ $errors->first('password_confirmation') }}</div>
+            @endif
+        </div>
+
+    </div>
+
+    <p class="terms-notice">
+        By creating an account, you agree to our
+        <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+    </p>
+
+    <button type="submit" class="btn-submit">
+        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        Create account
+    </button>
+</form>
