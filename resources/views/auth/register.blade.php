@@ -7,7 +7,6 @@
     * { font-family:'Inter',sans-serif;box-sizing:border-box;margin:0;padding:0; }
     body { background:#f8f9ff; }
 
-    /* ── Animated Background ── */
     .bg-scene { position:fixed;inset:0;overflow:hidden;background:#f8f9ff;z-index:0; }
     .blob { position:absolute;border-radius:50%;filter:blur(80px);opacity:0.18;animation:blobFloat linear infinite; }
     .blob-1 { width:600px;height:600px;background:radial-gradient(circle,#6366f1,#a5b4fc);top:-200px;left:-150px;animation-duration:18s; }
@@ -34,7 +33,6 @@
         100% { opacity:0;transform:translateY(-20px) scale(1.2); }
     }
 
-    /* ── Layout ── */
     .page-wrap {
         position:relative;z-index:10;
         min-height:100vh;
@@ -42,7 +40,6 @@
         padding:2rem 1.5rem;
     }
 
-    /* ── Card ── */
     .card {
         background:rgba(255,255,255,0.88);
         backdrop-filter:blur(24px) saturate(180%);
@@ -70,7 +67,6 @@
         100% { background-position:200% 0; }
     }
 
-    /* ── Brand row ── */
     .brand-row { display:flex;align-items:center;gap:0.875rem;margin-bottom:1.75rem;animation:fadeUp 0.5s 0.1s ease both; }
     .brand-wordmark {
         font-size:1.25rem;
@@ -84,7 +80,6 @@
     }
     .brand-sub { font-size:0.72rem;font-weight:400;color:#94a3b8;margin-top:2px;letter-spacing:0.01em; }
 
-    /* ── Headings ── */
     .card-title { font-size:1.625rem;font-weight:800;color:#0f172a;letter-spacing:-0.04em;line-height:1.2;margin-bottom:0.375rem;animation:fadeUp 0.5s 0.2s ease both; }
     .card-subtitle { font-size:0.875rem;color:#64748b;font-weight:400;line-height:1.6;margin-bottom:1.75rem;animation:fadeUp 0.5s 0.28s ease both; }
 
@@ -93,13 +88,11 @@
         to   { opacity:1;transform:translateY(0); }
     }
 
-    /* ── Two-column grid ── */
     .form-grid { display:grid;grid-template-columns:1fr 1fr;gap:0 1rem; }
     @media(max-width:480px) { .form-grid { grid-template-columns:1fr; } }
     .col-span-2 { grid-column:span 2; }
     @media(max-width:480px) { .col-span-2 { grid-column:span 1; } }
 
-    /* ── Form group ── */
     .form-group { margin-bottom:1.125rem;animation:fadeUp 0.5s ease both; }
     .form-group:nth-child(1) { animation-delay:0.32s; }
     .form-group:nth-child(2) { animation-delay:0.38s; }
@@ -132,43 +125,36 @@
     .form-input.is-valid { border-color:#10b981; }
     .form-input.is-valid:focus { box-shadow:0 0 0 3px rgba(16,185,129,0.12); }
 
-    /* ── Suppress ALL browser-native password controls ── */
     input[type="password"]::-ms-reveal,
     input[type="password"]::-ms-clear,
     input[type="password"]::-webkit-contacts-auto-fill-button,
     input[type="password"]::-webkit-credentials-auto-fill-button { display:none !important; }
     input::-webkit-password-reveal-icon { display:none !important; }
 
-    /* Eye toggle */
     .has-eye .form-input { padding-right:2.75rem; }
     .eye-toggle { position:absolute;right:0.875rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:0;color:#94a3b8;transition:color 0.2s ease;display:flex;align-items:center;z-index:2; }
     .eye-toggle:hover { color:#6366f1; }
     .eye-toggle svg { width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round; }
 
-    /* Password strength bar */
     .strength-bar-wrap { margin-top:0.5rem;display:none; }
     .strength-bar-wrap.visible { display:block; }
     .strength-track { height:3px;border-radius:999px;background:#e2e8f0;overflow:hidden;margin-bottom:0.3rem; }
     .strength-fill { height:100%;border-radius:999px;width:0%;transition:width 0.4s ease,background 0.4s ease; }
     .strength-label { font-size:0.7rem;font-weight:500;color:#94a3b8;text-align:right; }
 
-    /* Match indicator */
     .match-indicator { font-size:0.75rem;font-weight:500;margin-top:0.375rem;display:none;align-items:center;gap:0.3rem; }
     .match-indicator.visible { display:flex; }
     .match-indicator.match   { color:#10b981; }
     .match-indicator.no-match { color:#f59e0b; }
     .match-indicator svg { width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round; }
 
-    /* Error */
     .input-error { font-size:0.78125rem;color:#ef4444;font-weight:500;margin-top:0.375rem;display:flex;align-items:center;gap:0.3rem; }
     .input-error::before { content:'!';display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#ef4444;color:#fff;font-size:0.625rem;font-weight:700;flex-shrink:0; }
 
-    /* ── Terms notice ── */
     .terms-notice { font-size:0.78125rem;color:#94a3b8;line-height:1.55;text-align:center;margin-bottom:1.25rem;animation:fadeUp 0.5s 0.56s ease both; }
     .terms-notice a { color:#6366f1;text-decoration:none;font-weight:500; }
     .terms-notice a:hover { color:#4f46e5;text-decoration:underline; }
 
-    /* ── Submit ── */
     .btn-submit {
         width:100%;
         padding:0.8125rem 1.5rem;
@@ -190,10 +176,8 @@
     .btn-submit:active { transform:translateY(0) scale(0.99); }
     .btn-submit svg { width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round; }
 
-    /* ── Divider ── */
     .divider { height:1px;background:linear-gradient(90deg,transparent,#e2e8f0 30%,#e2e8f0 70%,transparent);margin:0 0 1.25rem;animation:fadeUp 0.5s 0.68s ease both; }
 
-    /* ── Footer ── */
     .card-footer { text-align:center;font-size:0.8125rem;color:#94a3b8;animation:fadeUp 0.5s 0.72s ease both; }
     .card-footer a { color:#6366f1;font-weight:600;text-decoration:none;transition:color 0.2s ease; }
     .card-footer a:hover { color:#4f46e5; }
@@ -227,7 +211,7 @@
 
             <div class="form-grid">
 
-                <!-- Name -->
+                <!-- Full Name -->
                 <div class="form-group">
                     <label class="form-label" for="name">Full name</label>
                     <div class="input-wrap">
@@ -241,14 +225,28 @@
                     @endif
                 </div>
 
-                <!-- Email -->
+                <!-- Username -->
                 <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </span>
+                        <input id="username" class="form-input" type="text" name="username" value="{{ old('username') }}" placeholder="janesmith" required autocomplete="username"/>
+                    </div>
+                    @if ($errors->has('username'))
+                        <div class="input-error">{{ $errors->first('username') }}</div>
+                    @endif
+                </div>
+
+                <!-- Email -->
+                <div class="form-group col-span-2">
                     <label class="form-label" for="email">Email address</label>
                     <div class="input-wrap">
                         <span class="input-icon">
                             <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                         </span>
-                        <input id="email" class="form-input" type="email" name="email" value="{{ old('email') }}" placeholder="you@company.com" required autocomplete="username"/>
+                        <input id="email" class="form-input" type="email" name="email" value="{{ old('email') }}" placeholder="you@company.com" required autocomplete="email"/>
                     </div>
                     @if ($errors->has('email'))
                         <div class="input-error">{{ $errors->first('email') }}</div>
@@ -418,128 +416,4 @@
     confirmInput.addEventListener('input', checkMatch);
     pwInput.addEventListener('input', checkMatch);
 </script>
-</x-guest-layout><form method="POST" action="{{ route('register') }}">
-    @csrf
-
-    {{-- Error alert box --}}
-    @if ($errors->any())
-        <div style="
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            border-radius: 10px;
-            padding: 0.8rem 1.1rem;
-            margin-bottom: 1.25rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #dc2626;
-        ">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="12" y1="8" x2="12" y2="12"/>
-                <line x1="12" y1="16" x2="12.01" y2="16"/>
-            </svg>
-            {{ $errors->first() }}
-        </div>
-    @endif
-
-    <div class="form-grid">
-
-        <!-- Full Name -->
-        <div class="form-group">
-            <label class="form-label" for="name">Full name</label>
-            <div class="input-wrap">
-                <span class="input-icon">
-                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                </span>
-                <input id="name" class="form-input" type="text" name="name" value="{{ old('name') }}" placeholder="Jane Smith" required autofocus autocomplete="name"/>
-            </div>
-            @if ($errors->has('name'))
-                <div class="input-error">{{ $errors->first('name') }}</div>
-            @endif
-        </div>
-
-        <!-- Username -->
-        <div class="form-group">
-            <label class="form-label" for="username">Username</label>
-            <div class="input-wrap">
-                <span class="input-icon">
-                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                </span>
-                <input id="username" class="form-input" type="text" name="username" value="{{ old('username') }}" placeholder="janesmit" required autocomplete="username"/>
-            </div>
-            @if ($errors->has('username'))
-                <div class="input-error">{{ $errors->first('username') }}</div>
-            @endif
-        </div>
-
-        <!-- Email -->
-        <div class="form-group col-span-2">
-            <label class="form-label" for="email">Email address</label>
-            <div class="input-wrap">
-                <span class="input-icon">
-                    <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                </span>
-                <input id="email" class="form-input" type="email" name="email" value="{{ old('email') }}" placeholder="you@company.com" required autocomplete="email"/>
-            </div>
-            @if ($errors->has('email'))
-                <div class="input-error">{{ $errors->first('email') }}</div>
-            @endif
-        </div>
-
-        <!-- Password -->
-        <div class="form-group col-span-2">
-            <label class="form-label" for="password">Password</label>
-            <div class="input-wrap has-eye">
-                <span class="input-icon">
-                    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-                </span>
-                <input id="password" class="form-input" type="password" name="password" placeholder="Min. 8 characters" required autocomplete="new-password"/>
-                <button type="button" class="eye-toggle" id="eyeToggle1">
-                    <svg id="eyeIcon1" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                </button>
-            </div>
-            <div class="strength-bar-wrap" id="strengthWrap">
-                <div class="strength-track"><div class="strength-fill" id="strengthFill"></div></div>
-                <div class="strength-label" id="strengthLabel"></div>
-            </div>
-            @if ($errors->has('password'))
-                <div class="input-error">{{ $errors->first('password') }}</div>
-            @endif
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="form-group col-span-2">
-            <label class="form-label" for="password_confirmation">Confirm password</label>
-            <div class="input-wrap has-eye">
-                <span class="input-icon">
-                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                </span>
-                <input id="password_confirmation" class="form-input" type="password" name="password_confirmation" placeholder="Re-enter your password" required autocomplete="new-password"/>
-                <button type="button" class="eye-toggle" id="eyeToggle2">
-                    <svg id="eyeIcon2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                </button>
-            </div>
-            <div class="match-indicator" id="matchIndicator">
-                <svg viewBox="0 0 12 12" id="matchIcon"></svg>
-                <span id="matchText"></span>
-            </div>
-            @if ($errors->has('password_confirmation'))
-                <div class="input-error">{{ $errors->first('password_confirmation') }}</div>
-            @endif
-        </div>
-
-    </div>
-
-    <p class="terms-notice">
-        By creating an account, you agree to our
-        <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
-    </p>
-
-    <button type="submit" class="btn-submit">
-        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
-        Create account
-    </button>
-</form>
+</x-guest-layout>
