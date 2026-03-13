@@ -353,9 +353,7 @@
                         autocomplete="username"
                     />
                 </div>
-                @if ($errors->has('login'))
-                    <div class="input-error">{{ $errors->first('login') }}</div>
-                @endif
+
             </div>
 
             <!-- Password -->
