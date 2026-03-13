@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: deskly
+    env: php
+    buildCommand: composer install --optimize-autoloader --no-dev && php artisan config:clear && php artisan migrate --force
+    startCommand: vendor/bin/heroku-php-apache2 public/
+    envVars:
+      - key: APP_NAME
+        value: Laravel
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        value: base64:MjzZbeIB4zJ6wNHTtjcSAqBuoMYUyZSDYBURZ/iEv0E=
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        value: mysql-e970a1e-kirktijol4-1b49.f.aivencloud.com
+      - key: DB_PORT
+        value: 19686
+      - key: DB_DATABASE
+        value: defaultdb
+      - key: DB_USERNAME
+        value: avnadmin
+      - key: DB_PASSWORD
+        value: REPLACE_IN_RENDER_DASHBOARD
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
