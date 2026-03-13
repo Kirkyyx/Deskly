@@ -62,6 +62,7 @@ class UserController extends Controller
 
         $user = User::create([
             'name'     => $name,
+            'username' => strtolower(str_replace(' ', '_', $validated['name'])) . '_' . rand(1000, 9999),
             'email'    => $validated['email'],
             'password' => bcrypt($validated['password']),
             'role'     => $validated['role'],
